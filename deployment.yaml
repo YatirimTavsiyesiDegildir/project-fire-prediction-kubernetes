@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: project-fire
+    platform: project-fire-platform
+  name: project-fire
+  namespace: msmb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-fire
+      platform: project-fire-platform
+  template:
+    metadata:
+      labels:
+        app: project-fire
+        platform: project-fire-platform
+    spec:
+      containers:
+        - name: project-fire
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          env:
+            - name: MIN_NUM_OF_SHARDS
+              value: "2"
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: 500m
+            requests:
+              memory: 500Mi
+              cpu: 500m
+          imagePullPolicy: Always
